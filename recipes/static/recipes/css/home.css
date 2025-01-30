@@ -34,6 +34,7 @@
     --font-headings: 'Roboto Slab', serif;
     --spacing-gutter-medium: 1.875rem;
     --spacing-gutter-large: 2.5rem;
+    --recipe-list-item-shadow: -5px 5px 10px rgba(0, 0, 0, .2);
 }
 
 * {
@@ -45,7 +46,10 @@
 body {
     font-family: var(--font-primary);
     background: var(--color-gray-1);
-    color: var(--color-dark-text)
+    color: var(--color-dark-text); 
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 h1,
@@ -151,13 +155,21 @@ h6 {
 
 .recipe {
     background: var(--color-white);
-    box-shadow: -5px 5px 10px rgba(0, 0, 0, .2);
+    box-shadow: var(--recipe-list-item-shadow);
     transition: all 200ms ease-out;
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 .recipe img {
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+}
+
+.recipe-cover {
+    width: 100%;
+    height: 300px;
 }
 
 .recipe-list-item {
@@ -176,6 +188,17 @@ h6 {
     padding-bottom: calc(var(--spacing-gutter-medium) / 2)
 }
 
+.recipe-title-link {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+    transition: all 300ms ease-out;
+}
+
+.recipe-title-link:hover {
+    transform: scale(0.95);
+    text-decoration: underline;
+}
+
 .recipe-author {
     padding: 0 var(--spacing-gutter-medium)
 }
@@ -183,6 +206,7 @@ h6 {
 .recipe-content {
     padding: var(--spacing-gutter-medium);
     padding-top: calc(var(--spacing-gutter-medium) / 2);
+    flex-flow: 1;
 }
 
 .recipe-author-item {
@@ -200,6 +224,7 @@ h6 {
 }
 
 .recipe-meta-container {
+    margin-top: auto;
     display: flex;
     flex-grow: row wrap;
     padding: var(--spacing-gutter-medium);
@@ -237,6 +262,7 @@ h6 {
 }
 
 .main-footer {
+    margin-top: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -254,3 +280,36 @@ h6 {
 .main-footer a:hover {
     filter: brightness(0.8);
 }
+
+.main-footer img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--color-black);
+}
+
+.developer a {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    gap: 1rem;
+}
+
+.main-content-detail .recipe-list-item {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.main-content-detail .recipe-list-item:hover {
+    box-shadow: var(--recipe-list-item-shadow)
+}
+
+.main-content-detail .recipe-cover {
+    width: 100%;
+    height: 30rem;
+}
+
+.preparation-steps {
+    padding: var(--spacing-gutter-medium);
+}
+

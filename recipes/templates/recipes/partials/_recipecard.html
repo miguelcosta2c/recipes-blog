@@ -1,36 +1,52 @@
 <div class="recipe recipe-list-item">
 
-  <div class="recipe-cover">
-    <img src="https://placehold.co/1280x600/png" alt="">
-  </div>
-
-  <div class="recipe-title-container">
-    <h2 class="recipe-title">Lorem ipsum dolor sit amet</h2>
-  </div>
+  {% if is_detail_page is True %}
+    <div class="recipe-cover">
+      <img src="{{ recipe.cover.url }}" alt="">
+    </div>
+  {% else %}
+    <a href="{% url "recipes:recipe" recipe.id %}">
+      <div class="recipe-cover">
+        <img src="{{ recipe.cover.url }}" alt="">
+      </div>
+    </a>
+  {% endif %}
+  
+  {% if is_detail_page is True %}
+    <div class="recipe-title-container">
+      <h2 class="recipe-title">{{ recipe.title }}</h2>
+    </div>
+  {% else %}
+    <a href="{% url "recipes:recipe" recipe.id %}" class="recipe-title-link">
+      <div class="recipe-title-container">
+        <h2 class="recipe-title">{{ recipe.title }}</h2>
+      </div>
+    </a>
+  {% endif %}
 
   <div class="recipe-author">
 
     <span class="recipe-author-item">
       <i class="fas fa-user"></i>
-      Miguel Cosme Costa
+      {{ recipe.author.first_name }} {{ recipe.author.last_name }}
     </span>
 
     <span class="recipe-author-item">
       <i class="fas fa-calendar-alt"></i>
-      25/06/2010 às 9:41
+      {{ recipe.created_at|date:"d/m/Y" }} às {{ recipe.created_at|date:"H:i:s"}}
     </span>
 
     <span class="recipe-author-item">
       <a href="/">
         <i class="fas fa-layer-group"></i>
-        <span>Café da manhã</span>
+        <span>{{ recipe.category.name }}</span>
       </a>
     </span>
 
   </div>
   
   <div class="recipe-content">
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda qui maiores deserunt, ex rem, ea pariatur unde cumque doloribus laudantium, modi laboriosam ad itaque quis harum vero. Architecto, tempora eius?</p>
+    <p>{{ recipe.description|truncatewords:300 }}</p>
   </div>
 
   <div class="recipe-meta-container">
@@ -41,7 +57,7 @@
            Preparo
         </h3>
         <div class="recipe-meta-text">
-          0 minutos
+          {{ recipe.preparation_time }} {{ recipe.preparation_time_unit }}
         </div>
       </h2>
     </div>
@@ -52,16 +68,24 @@
          Porções
       </h3>
       <div class="recipe-meta-text">
-        0 Porções
+        {{ recipe.servings }} {{ recipe.servings_unit }}
       </div>
     </div>
 
   </div>
 
-  <footer class="recipe-footer">
-    <a href="/" class="recipe-read-more button button-dark button-full-width">
-      <i class="fas fa-eye"></i>
-      <span>Ver Mais...</span>
-    </a>
-  </footer>
+  {% if is_detail_page is not True %}
+    <footer class="recipe-footer">
+      <a href="{% url "recipes:recipe" recipe.id %}" class="recipe-read-more button button-dark button-full-width">
+        <i class="fas fa-eye"></i>
+        <span>Ver Mais...</span>
+      </a>
+    </footer>
+  {% endif %}
+
+  {% if is_detail_page is True %}
+    <div class="preparation-steps">
+      {{ recipe.preparation_steps|linebreaksbr }}
+    </div>
+  {% endif %}
 </div>
