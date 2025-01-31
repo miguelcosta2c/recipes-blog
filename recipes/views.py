@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
-from .utils.make_recipes import make_recipe
-from .models import Recipe, Category
+from .models import Recipe
 # Create your views here.
 
 
