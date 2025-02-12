@@ -1,13 +1,22 @@
+{% load static %}
 <div class="recipe recipe-list-item">
 
   {% if is_detail_page is True %}
     <div class="recipe-cover">
-      <img src="{{ recipe.cover.url }}" alt="">
+      {% if recipe.cover %}
+        <img src="{{ recipe.cover.url }}" alt="">
+      {% else %}
+        <img src="{% static "recipes/images/default_image.png" %}" alt="default image">
+      {% endif %}
     </div>
   {% else %}
     <a href="{% url "recipes:recipe" recipe.id %}">
       <div class="recipe-cover">
+      {% if recipe.cover %}
         <img src="{{ recipe.cover.url }}" alt="">
+      {% else %}
+        <img src="{% static "recipes/images/default_image.png" %}" alt="default image">
+      {% endif %}
       </div>
     </a>
   {% endif %}

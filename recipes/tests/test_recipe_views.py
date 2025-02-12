@@ -31,6 +31,14 @@ class RecipeViewsTest(RecipeTestBase):
 
         self.assertIn(recipe_context.title, response_content)
 
+    def test_recipe_home_is_published(self):
+        self.make_recipe(is_published=False)
+        response = self.client.get(reverse('recipes:home'))
+        self.assertIn(
+            'No recipes found',
+            response.content.decode('utf-8')
+        )
+
     def test_recipe_category_views_function(self):
         view = resolve(reverse('recipes:category', kwargs={'pk': 1}))
         self.assertIs(view.func, views.category)
@@ -51,6 +59,13 @@ class RecipeViewsTest(RecipeTestBase):
 
         self.assertIn(recipe_context.title, response_content)
 
+    def test_recipe_category_is_published(self):
+        recipe = self.make_recipe(is_published=False)
+        response = self.client.get(
+            reverse('recipes:category', kwargs={'pk': recipe.category.pk})
+        )
+        self.assertEqual(response.status_code, 404)
+
     def test_recipe_detail_views_function(self):
         view = resolve(reverse('recipes:recipe', kwargs={'pk': 1}))
         self.assertIs(view.func, views.recipe)
@@ -69,3 +84,10 @@ class RecipeViewsTest(RecipeTestBase):
         response_content = response.content.decode()
 
         self.assertIn(recipe_context.title, response_content)
+
+    def test_recipe_detail_is_published(self):
+        recipe = self.make_recipe(is_published=False)
+        response = self.client.get(
+            reverse('recipes:recipe', kwargs={'pk': recipe.pk})
+        )
+        self.assertEqual(response.status_code, 404)

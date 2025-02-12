@@ -123,7 +123,7 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     GLOBALFILES_DIR / 'static'
 ]
-STATIC_ROOT = BASE_DIR / 'dist_static'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Media Files (Uploaded Images)
 
