@@ -10,6 +10,8 @@
   {% endif %}
       {% for recipe in recipes %}
         {% include "recipes/partials/_recipecard.html" %}
+      {% empty %}
+        <h1 class="not-found-message">No recipes found</h1>
       {% endfor %}
     </div>
 {% endblock content %}
