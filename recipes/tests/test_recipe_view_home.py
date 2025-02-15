@@ -26,7 +26,7 @@ class RecipeViewsTest(RecipeTestBase):
     def test_recipe_home_shows_recipes(self):
         self.make_recipe()
         response = self.client.get(reverse('recipes:home'))
-        recipe_context = response.context['recipes'].first()
+        recipe_context = response.context['recipes'][0]
         response_content = response.content.decode()
 
         self.assertIn(recipe_context.title, response_content)

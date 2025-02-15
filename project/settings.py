@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from typing import List
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 GLOBALFILES_DIR = BASE_DIR / 'base'
@@ -21,10 +23,10 @@ GLOBALFILES_DIR = BASE_DIR / 'base'
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-@o7@1(r373_d1cy#wm*e+37+n%uua50amqj31v4n9+qa#!0onq"  # noqa: E501
+SECRET_KEY = os.environ.get('SECRET_KEY', 'INSECURE')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if os.environ.get('DEBUG', 0) == '1' else False
 
 ALLOWED_HOSTS: List[str] = []
 
