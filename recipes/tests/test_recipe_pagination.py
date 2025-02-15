@@ -11,7 +11,7 @@ class RecipePaginationTest(RecipeTestBase):
             self.make_recipe(
                 author_data={'username': f'Author {i}'},
                 title=f"Title {i}",
-                slug=f"slug-{i}"
+                slug=f"slug-{i}",
             )
         urlsearch = reverse('recipes:search')
         response = self.client.get(f'{urlsearch}?q=title')
