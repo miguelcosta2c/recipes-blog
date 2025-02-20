@@ -22,6 +22,7 @@ class RecipePaginationTest(RecipeTestBase):
         # Asserting that the paginator has 3 pages
         self.assertEqual(paginator.num_pages, 3)
 
+    @patch('recipes.views.PER_PAGE', new=3)
     def test_recipe_pagination_returns_page_1_if_page_is_not_a_number(self):
         for i in range(1, 12):
             self.make_recipe(

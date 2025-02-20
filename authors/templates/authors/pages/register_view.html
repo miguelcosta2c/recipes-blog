@@ -1,1 +1,7 @@
-<h1>Ola Mundo</h1>
+{% extends "global/base.html" %}
+
+{% block title %}Register{{ title }}{% endblock title %}
+
+{% block content %}
+  {% include "global/partials/_registerform.html" %}
+{% endblock content %}
