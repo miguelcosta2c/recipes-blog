@@ -2,7 +2,7 @@
   <form class="form-container" action="{{ form_action }}" method="POST">
     {% csrf_token %}
     <div class="form-content form-title center">
-      <h2>Register</h2>
+      <h2>{{ form_title }}</h2>
     </div>
     {% if messages %}
       <div class="form-group">
@@ -45,7 +45,7 @@
 
     <div class="form-content form-content-grid">
       <div class="form-group">
-        <button type="submit">Register</button>
+        <button class="submit-button" type="submit">{{ form_title }}</button>
       </div>
     </div>
 

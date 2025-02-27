@@ -1,0 +1,63 @@
+<div class="main-content container">
+  <div class="form-content form-title center">
+    <h2>{{ form_title }}</h2>
+    {% if request.user.is_authenticated %}
+      <p>
+        You are logged in with {{ request.user.username }}.
+        <form action="{% url "authors:logout" %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="username" value="{{ request.user.username }}">
+          <button class="generic-button" type="submit">
+            Click here
+          </button>
+          to logout
+        </form>
+      </p>
+    {% endif %}
+  </div>
+  {% if messages %}
+    <div class="form-content">
+      {% include "global/partials/_message.html" %}
+    </div>
+  {% endif %}
+  <form class="form-container" action="{{ form_action }}" method="POST">
+    {% csrf_token %}
+    {% if form %}
+      <div class="form-content form-content-grid login-grid">
+        {% for field in form %}
+          <div class="form-group">
+            <label for="{{ field.id_for_label }}">
+              {{ field.label }}
+            </label>
+
+            {{ field }}
+
+            {% if field.help_text %}
+              <p class="help-text">
+                {{ field.help_text }}
+              </p>
+            {% endif %}
+
+            {{ field.errors }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if form.non_field_errors %}
+      <div class="form-content form-content-grid">
+        <div class="form-group">
+          {% for non_field_error in form.non_field_errors %}
+            <div class="message message-error center">
+              {{ non_field_error }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+    <div class="form-content form-content-grid">
+      <div class="form-group">
+        <button class="submit-button" type="submit">{{ form_title }}</button>
+      </div>
+    </div>
+  </form>
+</div>
