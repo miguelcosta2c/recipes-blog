@@ -1,6 +1,6 @@
 from unittest import TestCase
 from django.test import TestCase as DjangoTestCase
-from authors.forms import RegisterForm
+from authors.forms import RegisterForm  # type: ignore
 from parameterized import parameterized  # type: ignore
 from django.urls import reverse
 

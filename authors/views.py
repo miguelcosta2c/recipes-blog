@@ -80,7 +80,8 @@ def logout_view(request: http.HttpRequest):
     is_post = request.method != 'POST'
     is_valid_user = request.POST.get('username', '') != request.user.get_username()  # noqa: E501
     if is_post or is_valid_user:
+        messages.error(request, 'Invalid logout request')
         return redirect('authors:login')
-
+    messages.success(request, 'Logged out successfully')
     logout(request)
     return redirect('authors:login')

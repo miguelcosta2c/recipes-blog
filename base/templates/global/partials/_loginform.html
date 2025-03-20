@@ -20,7 +20,7 @@
       {% include "global/partials/_message.html" %}
     </div>
   {% endif %}
-  <form class="form-container" action="{{ form_action }}" method="POST">
+  <form class="form-container main-form" action="{{ form_action }}" method="POST">
     {% csrf_token %}
     {% if form %}
       <div class="form-content form-content-grid login-grid">

@@ -7,12 +7,8 @@ from unittest.mock import patch
 class RecipePaginationTest(RecipeTestBase):
     @patch('recipes.views.PER_PAGE', new=3)
     def test_recipe_search_pagination(self):
-        for i in range(9):
-            self.make_recipe(
-                author_data={'username': f'Author {i}'},
-                title=f"Title {i}",
-                slug=f"slug-{i}",
-            )
+        self.make_recipes_in_batch(9)
+
         urlsearch = reverse('recipes:search')
         response = self.client.get(f'{urlsearch}?q=title')
         list_recipes = response.context['recipes']
@@ -24,12 +20,7 @@ class RecipePaginationTest(RecipeTestBase):
 
     @patch('recipes.views.PER_PAGE', new=3)
     def test_recipe_pagination_returns_page_1_if_page_is_not_a_number(self):
-        for i in range(1, 12):
-            self.make_recipe(
-                author_data={'username': f'Author {i}'},
-                title=f"Title {i}",
-                slug=f"slug-{i}"
-            )
+        self.make_recipes_in_batch(11)
 
         urlsearch = reverse('recipes:home')
         response = self.client.get(f'{urlsearch}?page=wrongparameter')
