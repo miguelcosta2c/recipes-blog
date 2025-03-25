@@ -1,6 +1,7 @@
 from unittest import TestCase
 from recipes.utils.make_pagination import (make_pagination_range,
                                            make_pagination_size)
+from pprint import pprint
 SIZE = make_pagination_size(20)
 
 
@@ -80,3 +81,13 @@ class PaginationTest(TestCase):
             current_page=21
         )['pagination']
         self.assertEqual([17, 18, 19, 20], pagination)
+
+    def test_make_pagination_range_when_qty_pages_are_greater_than_page_range(self):  # noqa: E501
+        pagination = make_pagination_range(
+            page_range=make_pagination_size(3),
+            qty_pages=8,
+            current_page=3
+        )
+        pagination_pagination = pagination['pagination']
+        self.assertEqual([1, 2, 3], pagination_pagination)
+        pprint(pagination)

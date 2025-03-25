@@ -12,21 +12,31 @@ def make_pagination_range(
     qty_pages: int,
     current_page: int,
 ) -> Dict[str, Any]:
-    middle_page = math.ceil(qty_pages / 2)
-    start_range = current_page - middle_page
-    stop_range = current_page + middle_page
-    total_pages = len(page_range)
-
-    start_range_offset = abs(start_range) if start_range < 0 else 0
-
-    if start_range < 0:
+    if len(page_range) < qty_pages:
         start_range = 0
-        stop_range += start_range_offset
+        stop_range = len(page_range)
+        total_pages = len(page_range)
+        first_page_out_of_range = False
+        last_page_out_of_range = False
+        pagination = page_range
+    else:
+        middle_page = math.ceil(qty_pages / 2)
+        start_range = current_page - middle_page
+        stop_range = current_page + middle_page
+        total_pages = len(page_range)
 
-    if stop_range >= total_pages:
-        start_range -= abs(total_pages - stop_range)
+        start_range_offset = abs(start_range) if start_range < 0 else 0
 
-    pagination = page_range[start_range:stop_range]
+        if start_range < 0:
+            start_range = 0
+            stop_range += start_range_offset
+
+        if stop_range >= total_pages:
+            start_range -= abs(total_pages - stop_range)
+
+        pagination = page_range[start_range:stop_range]
+        first_page_out_of_range = current_page > middle_page
+        last_page_out_of_range = stop_range < total_pages
 
     context_pagination = {
         'pagination': pagination,
@@ -36,8 +46,8 @@ def make_pagination_range(
         'total_pages': total_pages,
         'start_range': start_range,
         'stop_range': stop_range,
-        'first_page_out_of_range': current_page > middle_page,
-        'last_page_out_of_range': stop_range < total_pages
+        'first_page_out_of_range': first_page_out_of_range,
+        'last_page_out_of_range': last_page_out_of_range
     }
 
     return context_pagination
@@ -68,3 +78,7 @@ def make_pagination(
     )
 
     return page_obj, pagination_range
+
+
+if __name__ == '__main__':
+    print(make_pagination_range(make_pagination_size(3), 10, 2))
