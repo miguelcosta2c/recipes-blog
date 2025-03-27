@@ -2,6 +2,8 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.utils.text import slugify
 
 
 class Category(models.Model):
@@ -10,8 +12,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("recipes:category", kwargs={"pk": self.pk})
 
-# Create your models here.
+
 class Recipe(models.Model):
     title = models.CharField(max_length=65)
     description = models.CharField(max_length=165)
@@ -40,3 +44,12 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("recipes:recipe", kwargs={"pk": self.pk})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = str(slugify(self.title))
+            self.slug = slug
+        return super().save(*args, **kwargs)

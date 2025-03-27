@@ -6,7 +6,7 @@ from .test_recipe_base import RecipeTestBase
 class RecipeViewsTest(RecipeTestBase):
     def test_recipe_home_views_function(self):
         view = resolve(reverse('recipes:home'))
-        self.assertIs(view.func, views.home)
+        self.assertIs(view.func.view_class, views.RecipeListViewHome)
 
     def test_recipe_home_view_returns_status_200(self):
         response = self.client.get(reverse('recipes:home'))

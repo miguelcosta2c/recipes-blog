@@ -6,7 +6,7 @@ from .test_recipe_base import RecipeTestBase
 class RecipeCategoryViewTest(RecipeTestBase):
     def test_recipe_category_views_function(self):
         view = resolve(reverse('recipes:category', kwargs={'pk': 1}))
-        self.assertIs(view.func, views.category)
+        self.assertIs(view.func.view_class, views.RecipeListViewCategory)
 
     def test_recipe_category_view_returns_status_404(self):
         response = self.client.get(

@@ -35,17 +35,17 @@ urlpatterns = [
     ),
     path(
         'dashboard/recipe/delete/',
-        views.dashboard_recipe_delete_view,
+        views.DashboardRecipeDelete.as_view(),
         name='dashboard_recipe_delete'
     ),
     path(
         'dashboard/recipe/create/',
-        views.dashboard_recipe_create_view,
+        views.DashboardRecipe.as_view(),
         name='dashboard_recipe_create'
     ),
     path(
         'dashboard/recipe/<int:pk>/edit/',
-        views.dashboard_recipe_edit_view,
+        views.DashboardRecipe.as_view(),
         name='dashboard_recipe_edit'
     ),
 
